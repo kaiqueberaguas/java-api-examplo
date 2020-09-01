@@ -1,16 +1,17 @@
 package com.spring.example.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class Product {
+public class Subcategory {
     private Long id;
-    private String productCode;
-	private String name;
-    private double price;
+    private String subcategoryCode;
+    private String name;
     private String description;
-    private Subcategory Subcategory;
+    private Category category;
     private LocalDateTime lastUpdate;
     private LocalDateTime registerDate;
+    private List<Product> products;
 
     public Long getId() {
         return id;
@@ -20,12 +21,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getProductCode() {
-        return productCode;
+    public String getSubcategoryCode() {
+        return subcategoryCode;
     }
 
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
+    public void setSubcategoryCode(String subcategoryCode) {
+        this.subcategoryCode = subcategoryCode;
     }
 
     public String getName() {
@@ -36,14 +37,6 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -52,12 +45,20 @@ public class Product {
         this.description = description;
     }
 
-    public Subcategory getSubcategory() {
-        return Subcategory;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setSubcategory(Subcategory subcategory) {
-        Subcategory = subcategory;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public LocalDateTime getLastUpdate() {
@@ -76,4 +77,5 @@ public class Product {
         this.registerDate = registerDate;
     }
 
+    
 }

@@ -1,14 +1,15 @@
 package com.spring.example.models;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class Product {
+public class Category {
+    
     private Long id;
-    private String productCode;
-	private String name;
-    private double price;
+    private String categoryCode;
+    private String name;
     private String description;
-    private Subcategory Subcategory;
+    private List<Subcategory> subcategories;
     private LocalDateTime lastUpdate;
     private LocalDateTime registerDate;
 
@@ -20,12 +21,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getProductCode() {
-        return productCode;
+    public String getCategoryCode() {
+        return categoryCode;
     }
 
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode;
     }
 
     public String getName() {
@@ -36,14 +37,6 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -52,12 +45,12 @@ public class Product {
         this.description = description;
     }
 
-    public Subcategory getSubcategory() {
-        return Subcategory;
+    public List<Subcategory> getSubcategories() {
+        return subcategories;
     }
 
-    public void setSubcategory(Subcategory subcategory) {
-        Subcategory = subcategory;
+    public void setSubcategories(List<Subcategory> subcategories) {
+        this.subcategories = subcategories;
     }
 
     public LocalDateTime getLastUpdate() {
@@ -75,5 +68,4 @@ public class Product {
     public void setRegisterDate(LocalDateTime registerDate) {
         this.registerDate = registerDate;
     }
-
 }
