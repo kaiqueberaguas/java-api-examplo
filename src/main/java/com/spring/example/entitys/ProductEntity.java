@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ProductEntity{
@@ -32,7 +32,7 @@ public class ProductEntity{
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "SUBCATEGORY")
     private SubcategoryEntity subcategory;
 

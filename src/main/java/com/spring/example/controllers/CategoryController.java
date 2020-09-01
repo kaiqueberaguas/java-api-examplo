@@ -2,9 +2,9 @@ package com.spring.example.controllers;
 
 import java.util.List;
 
-import com.spring.example.controllers.parameters.ProductParameter;
-import com.spring.example.presenters.ProductPresenter;
-import com.spring.example.services.ProductService;
+import com.spring.example.controllers.parameters.CategoryParameter;
+import com.spring.example.presenters.CategoryPresenter;
+import com.spring.example.services.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,50 +23,50 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Controller
-@Api(tags="Produtos")
-@RequestMapping("/api/v1/products")
-public class ProductController {
+@Api(tags="Categorias")
+@RequestMapping("/api/v1/categories")
+public class CategoryController {
 
     @Autowired
-    private ProductService productService;
+    private CategoryService categoryService;
 
     @GetMapping
-    @ApiOperation(value = "Consulta de produtos")
-    public ResponseEntity<List<ProductPresenter>> findAll(
+    @ApiOperation(value = "Consulta de categorias")
+    public ResponseEntity<List<CategoryPresenter>> findAll(
         @RequestParam(value = "page",required = false,defaultValue = "1") int page,
         @RequestParam(value = "size",required = false,defaultValue = "15") int size){
         return null;
     }
     @GetMapping(value = "{/code}")
-    @ApiOperation(value = "Consulta de produto pelo codigo")
-    public ResponseEntity<ProductPresenter> findByCode(
-        @PathVariable(value = "code") String productCode ){
+    @ApiOperation(value = "Consulta de categoria pelo codigo")
+    public ResponseEntity<CategoryPresenter> findByCode(
+        @PathVariable(value = "code") String categoryCode ){
         return null;
     }
 
     @PostMapping()
-    @ApiOperation(value = "Cria um produto")
-    public ResponseEntity<ProductPresenter> create(
-        @RequestBody() ProductParameter product){
+    @ApiOperation(value = "Cria uma categoria")
+    public ResponseEntity<CategoryPresenter> create(
+        @RequestBody() CategoryParameter category){
         return null;
     }
     @PutMapping()
-    @ApiOperation(value = "Atualiza um produto")
-    public ResponseEntity<ProductPresenter> update(
-        @RequestBody() ProductParameter product){
+    @ApiOperation(value = "Atualiza uma categoria")
+    public ResponseEntity<CategoryPresenter> update(
+        @RequestBody() CategoryParameter category){
         return null;
     }
     @PatchMapping("/{code}")
-    @ApiOperation(value = "Atualiza parcialmente um produto")
-    public ResponseEntity<ProductPresenter> partialUpdate(
-        @PathVariable(value="code") String productCode,
-        @RequestBody() ProductParameter product){
+    @ApiOperation(value = "Atualiza parcialmente uma categoria")
+    public ResponseEntity<CategoryPresenter> partialUpdate(
+        @PathVariable(value="code") String categoryCode,
+        @RequestBody() CategoryParameter category){
         return null;
     }
     @DeleteMapping()
-    @ApiOperation(value = "Deleta um produto")
-    public ResponseEntity<ProductPresenter> deleteProduct(
-        @PathVariable(value="code") String productCode){
+    @ApiOperation(value = "Deleta uma categoria")
+    public ResponseEntity<CategoryPresenter> delete(
+        @PathVariable(value="code") String categoryCode){
         return null;
     }
 }

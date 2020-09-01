@@ -25,3 +25,5 @@ Para rodar:
     cd target
     java -jar api-example
 
+Swagger:
+    http://localhost:8080/swagger-ui.html

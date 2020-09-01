@@ -1,12 +1,9 @@
-// package com.spring.example.repositories;
+package com.spring.example.repositories;
 
-// import com.spring.apijava.entitys.ProductEntity;
-// import org.springframework.data.jpa.repository.JpaRepository;
+import com.spring.example.entitys.ProductEntity;
 
-// import com.spring.apijava.models.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-// public interface IProductRepository extends JpaRepository<ProductEntity,Long> {
+public interface ProductRepository extends JpaRepository<ProductEntity,Long> {
 
-//     Product findById(long id);
-	
-// }
+}

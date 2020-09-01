@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.spring.example.models.Subcategory;
@@ -30,7 +31,8 @@ public class SubcategoryEntity {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "CATEGORY")
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY")
     private CategoryEntity category;
 
     @Column(name = "LAST_UPDATE")
