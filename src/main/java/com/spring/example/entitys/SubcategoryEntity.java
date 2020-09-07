@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.spring.example.models.Subcategory;
 
 @Entity
-@Table(name = "SUBCATEGORY")
+@Table(name = "SUBCATEGORIES")
 public class SubcategoryEntity {
     
     @Id

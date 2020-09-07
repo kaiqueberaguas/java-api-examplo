@@ -34,15 +34,16 @@ public class CategoryController {
     @GetMapping
     @ApiOperation(value = "Consulta de categorias")
     public ResponseEntity<List<CategoryPresenter>> findAll(
-        @RequestParam(value = "page",required = false,defaultValue = "0") int page,
-        @RequestParam(value = "size",required = false,defaultValue = "15") int size){
-            var response = this.categoryService.findAll(page, size);
-            if(response == null || response.isEmpty()){
-                return new ResponseEntity(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(response.stream().map(s -> new CategoryPresenter(s))
-                .collect(Collectors.toList()), HttpStatus.OK);
+    @RequestParam(value = "page",required = false,defaultValue = "0") int page,
+    @RequestParam(value = "size",required = false,defaultValue = "15") int size){
+        var response = this.categoryService.findAll(page, size);
+        if(response == null || response.isEmpty()){
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(response.stream().map(s -> new CategoryPresenter(s))
+            .collect(Collectors.toList()), HttpStatus.OK);
+    }
+
     @GetMapping(value = "{/code}")
     @ApiOperation(value = "Consulta de categoria pelo codigo")
     public ResponseEntity<CategoryPresenter> findByCode(

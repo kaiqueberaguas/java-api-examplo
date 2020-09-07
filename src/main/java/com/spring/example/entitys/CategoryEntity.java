@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import com.spring.example.models.Category;
 
 @Entity
-@Table(name = "CATEGORY")
+@Table(name = "CATEGORIES")
 public class CategoryEntity {
     
     @Id
