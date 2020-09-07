@@ -8,7 +8,6 @@ Projeto exemplo de aplicação java com Spring-boot e Spring-Data
     
     Repository:
         -SpringData
-        -JDBC template
 
     Db:
         H2
