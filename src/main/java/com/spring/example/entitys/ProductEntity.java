@@ -3,6 +3,9 @@ package com.spring.example.entitys;
 import com.spring.example.entitys.ProductEntity;
 import com.spring.example.models.Product;
 
+import org.hibernate.validator.constraints.Length;
+
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
@@ -12,25 +15,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "PRODUCT")
 public class ProductEntity{
     
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "PRODUCT_CODE")
+    @Column(name = "PRODUCT_CODE",unique = true)
     private String productCode;
 
+    @Length(max = 25)
     @Column(name = "NAME")
     private String name;
     
     @Column(name = "PRICE")
-    private double price;
+    private BigDecimal price;
 
+    @Length(max = 100)
     @Column(name = "DESCRIPTION")
     private String description;
+  
+    @Length(max = 500)
+    @Column(name = "INFORMATION")
+    private String information;
 
     @ManyToOne
     @JoinColumn(name = "SUBCATEGORY")
@@ -46,14 +57,19 @@ public class ProductEntity{
     }
 
     public ProductEntity(Product product) {
-        this.id = product.getId();
-        this.productCode = product.getProductCode();
-        this.name = product.getName();
-        this.price = product.getPrice();
-        this.description = product.getDescription();
-        this.subcategory = new SubcategoryEntity(product.getSubcategory());
-        this.lastUpdate = Timestamp.valueOf(product.getLastUpdate());
-        this.registerDate = Timestamp.valueOf(product.getRegisterDate());
+        if(product != null){
+            this.id = product.getId();
+            this.productCode = product.getProductCode();
+            this.name = product.getName();
+            this.price = product.getPrice();
+            this.description = product.getDescription();
+            this.information = product.getInformation();
+            this.subcategory = new SubcategoryEntity(product.getSubcategory());
+            if(product.getLastUpdate() != null)
+                this.lastUpdate = Timestamp.valueOf(product.getLastUpdate());
+            if(product.getRegisterDate() != null)
+                this.registerDate = Timestamp.valueOf(product.getRegisterDate());
+        }
     }
 
     public Long getId() {
@@ -80,11 +96,11 @@ public class ProductEntity{
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -118,6 +134,14 @@ public class ProductEntity{
 
     public void setRegisterDate(Timestamp registerDate) {
         this.registerDate = registerDate;
+    }
+    
+    public String getInformation() {
+        return information;
+    }
+
+    public void setInformation(String information) {
+        this.information = information;
     }   
 
     public Product toModel(){
@@ -127,10 +151,13 @@ public class ProductEntity{
         model.setProductCode(this.productCode);
         model.setDescription(this.description);
         model.setPrice(this.price);
-        model.setSubcategory(subcategory.toModel());
-        model.setLastUpdate(this.lastUpdate.toLocalDateTime());
-        model.setRegisterDate(this.registerDate.toLocalDateTime());
+        if(subcategory != null)
+            model.setSubcategory(subcategory.toModel());
+        if(this.lastUpdate != null)
+            model.setLastUpdate(this.lastUpdate.toLocalDateTime());
+        if(this.registerDate != null)
+            model.setRegisterDate(this.registerDate.toLocalDateTime());
+        model.setInformation(this.information);
         return model;
     }
-
 }

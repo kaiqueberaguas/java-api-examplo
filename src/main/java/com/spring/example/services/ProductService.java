@@ -1,14 +1,13 @@
 package com.spring.example.services;
 
-import java.util.List;
-
 import com.spring.example.models.Product;
 
+import org.springframework.data.domain.Page;
+
 public interface ProductService {
-    List<Product> findAll(int page, int size);
-    Product findById(Product product);
+    Page<Product> findAll(int page, int size);
+    Product find(String productCode);
     Product create(Product product);
     Product update(Product product);
-    Product partialUpdate(Product product);
-    Product delete(Product product);
+    Product delete(String productCode);
 }

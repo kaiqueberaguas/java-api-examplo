@@ -12,23 +12,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
+import javax.persistence.Table;
 import com.spring.example.models.Subcategory;
 
 @Entity
+@Table(name = "SUBCATEGORY")
 public class SubcategoryEntity {
     
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     
-    @Column(name = "SUBCATEGORY_CODE")
+    @Column(name = "SUBCATEGORY_CODE",unique = true)
     private String subcategoryCode;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME",length = 25)
     private String name;
     
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION",length = 100)
     private String description;
 
     @ManyToOne
@@ -49,15 +50,20 @@ public class SubcategoryEntity {
     }
 
     public SubcategoryEntity(Subcategory subcategory) {
-        this.id = subcategory.getId();
-        this.subcategoryCode = subcategory.getSubcategoryCode();
-        this.name = subcategory.getName();
-        this.description = subcategory.getDescription();
-        this.category = new CategoryEntity(subcategory.getCategory());
-        this.lastUpdate = Timestamp.valueOf(subcategory.getLastUpdate());
-        this.registerDate = Timestamp.valueOf(subcategory.getRegisterDate());
-        this.products = subcategory.getProducts().stream()
-            .map(p -> new ProductEntity(p)).collect(Collectors.toList());
+        if(subcategory != null){
+            this.id = subcategory.getId();
+            this.subcategoryCode = subcategory.getSubcategoryCode();
+            this.name = subcategory.getName();
+            this.description = subcategory.getDescription();
+            this.category = new CategoryEntity(subcategory.getCategory());
+            if(subcategory.getLastUpdate() != null)
+                this.lastUpdate = Timestamp.valueOf(subcategory.getLastUpdate());
+            if(subcategory.getRegisterDate() != null)
+                this.registerDate = Timestamp.valueOf(subcategory.getRegisterDate());
+            if(subcategory.getProducts() != null)
+                this.products = subcategory.getProducts().stream()
+                .map(p -> new ProductEntity(p)).collect(Collectors.toList());
+        }
     }
 
     public Long getId() {
@@ -130,11 +136,15 @@ public class SubcategoryEntity {
         model.setSubcategoryCode(this.subcategoryCode);
         model.setName(this.name);
         model.setDescription(this.description);
-        model.setCategory(this.category.toModel());
-        model.setProducts(this.products.stream().map(p -> p.toModel())
-            .collect(Collectors.toList()));
-        model.setLastUpdate(this.lastUpdate.toLocalDateTime());
-        model.setRegisterDate(this.registerDate.toLocalDateTime());
+        if(this.category != null)
+            model.setCategory(this.category.toModel());
+        if(this.products != null && !this.products.isEmpty())
+            model.setProducts(this.products.stream().map(p -> p.toModel())
+                .collect(Collectors.toList()));
+        if(this.lastUpdate != null)
+            model.setLastUpdate(this.lastUpdate.toLocalDateTime());
+        if(this.registerDate != null)
+            model.setRegisterDate(this.registerDate.toLocalDateTime());
         return model;
     }
 

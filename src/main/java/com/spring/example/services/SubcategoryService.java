@@ -1,16 +1,15 @@
 package com.spring.example.services;
 
-import java.util.List;
-
 import com.spring.example.models.Subcategory;
+
+import org.springframework.data.domain.Page;
 
 
 public interface SubcategoryService {
     
-    List<Subcategory> findAll(int page, int size);
-    Subcategory findById(String subcategoryCode);
+    Page<Subcategory> findAll(int page, int size);
+    Subcategory find(String subcategoryCode);
     Subcategory create(Subcategory subcategory);
     Subcategory update(Subcategory subcategory);
-    Subcategory partialUpdate(Subcategory subcategory);
-    Subcategory delete(Subcategory subcategory);
+    Subcategory delete(String subcategoryCode);
 }

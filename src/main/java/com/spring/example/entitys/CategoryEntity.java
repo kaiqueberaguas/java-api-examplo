@@ -6,28 +6,32 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.spring.example.models.Category;
 
 @Entity
+@Table(name = "CATEGORY")
 public class CategoryEntity {
     
     @Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "CATEGORY_CODE")
+
+    @Column(name = "CATEGORY_CODE",unique = true)
     private String categoryCode;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME",length = 25)
     private String name;
     
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION",length = 100)
     private String description;
 
     @Column(name = "LAST_UPDATE")
@@ -36,7 +40,7 @@ public class CategoryEntity {
     @Column(name = "REGISTER_DATE")
     private Timestamp registerDate;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "SUBCATEGORY")
     private List<SubcategoryEntity> subcategories;
 
@@ -44,16 +48,21 @@ public class CategoryEntity {
     }
 
     public CategoryEntity(Category category) {
-        this.id = category.getId();
-        this.categoryCode = category.getCategoryCode();
-        this.name = category.getName();
-        this.description = category.getDescription();
-        this.lastUpdate = Timestamp.valueOf(category.getLastUpdate());
-        this.registerDate = Timestamp.valueOf(category.getRegisterDate());
-        this.subcategories = category.getSubcategories().stream()
+        if(category != null){
+            this.id = category.getId();
+            this.categoryCode = category.getCategoryCode();
+            this.name = category.getName();
+            this.description = category.getDescription();
+            if(category.getLastUpdate() != null)
+                this.lastUpdate = Timestamp.valueOf(category.getLastUpdate());
+            if(category.getRegisterDate() != null)
+                this.registerDate = Timestamp.valueOf(category.getRegisterDate());
+            if(category.getSubcategories() != null)
+                this.subcategories = category.getSubcategories().stream()
             .map(s -> new SubcategoryEntity(s)).collect(Collectors.toList());
+        }
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -116,10 +125,14 @@ public class CategoryEntity {
         model.setCategoryCode(this.categoryCode);
         model.setName(this.name);
         model.setDescription(this.description);
-        model.setLastUpdate(this.lastUpdate.toLocalDateTime());
-        model.setRegisterDate(this.registerDate.toLocalDateTime());
-        model.setSubcategories(this.subcategories.stream().map(s -> s.toModel())
-            .collect(Collectors.toList()));
+        if(this.lastUpdate != null)
+            model.setLastUpdate(this.lastUpdate.toLocalDateTime());
+        if(this.registerDate != null)
+            model.setRegisterDate(this.registerDate.toLocalDateTime());
+        if(this.subcategories != null && !this.subcategories.isEmpty()){
+            model.setSubcategories(this.subcategories.stream().map(s -> s.toModel()).collect(Collectors.toList()));
+
+        }
         return model;
     }
 
